@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/welcomeHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Classes You've Taken"
+        android:textSize="40dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+    <TextView
+        android:id="@+id/explain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/welcomeHeader"
+        android:layout_centerHorizontal="true"
+        android:text="Add classes you've taken to fulfill requirements listed on the home page."
+        android:textSize="20dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+    <GridView
+	    android:id="@+id/reqsGridView"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:layout_above="@+id/textView2"
+	    android:layout_below="@+id/explain"
+	    android:columnWidth="200dp"
+	    android:gravity="center"
+	    android:numColumns="auto_fit"
+	    android:stretchMode="columnWidth"
+	    android:verticalSpacing="10dp" />
+
+    <TextView
+        android:id="@+id/courseNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/departmentField"
+        android:layout_marginLeft="200dp"
+        android:paddingTop="5dp"
+        android:text="Course Number"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/addClassButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/courseNum"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:text="Add Class" />
+
+    <EditText
+        android:id="@+id/courseNumField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/courseNum"
+        android:layout_alignBottom="@+id/courseNum"
+        android:layout_toRightOf="@+id/courseNum"
+        android:ems="10"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/departmentField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignLeft="@+id/courseNumField"
+        android:ems="10" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="125dp"
+        android:layout_toLeftOf="@+id/addClassButton"
+        android:layout_marginLeft="228dp"
+        android:text="Department"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
+
+</RelativeLayout>

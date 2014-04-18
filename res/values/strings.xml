@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">128 Credits</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    
+    <string-array name="majors">
+        <item>BSCS</item>
+    </string-array>
+    
+    <string-array name="grad_years">
+        <item>2014</item>
+        <item>2015</item>
+        <item>2016</item>
+        <item>2017</item>
+        <item>2018</item>
+        <item>2019</item>
+        <item>2020</item>
+    </string-array>
+    
+    <color name="blue">#33B5E5</color>
+    <color name="orange">#F26522</color>
+    
+</resources>
