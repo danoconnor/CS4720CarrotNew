@@ -24,16 +24,51 @@
             android:layout_below="@+id/header"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="41dp" />
-
-        <Button
-            android:id="@+id/seeDetailsButton"
-            android:layout_width="125dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/fulfillReqSpinner"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
-            android:text="See Details" />
-
+		
+        <RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent" 
+	    android:layout_below="@+id/fulfillReqSpinner"
+	    android:paddingTop="30dp">
+	
+	    <TextView
+	        android:id="@+id/viewRatingHeader"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentTop="true"
+	        android:layout_centerHorizontal="true"
+	        android:text="Ratings For [class]"
+	        android:textAppearance="?android:attr/textAppearanceLarge" />
+	    
+	    <ScrollView
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentRight="true"
+	        android:id="@+id/viewRatingScrollView"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_above="@+id/addButton"
+	        android:layout_below="@+id/progressBar1">
+	        
+	        <LinearLayout
+	        android:id="@+id/viewRatingLinearLayout"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical" >
+	        
+	    	</LinearLayout>
+	    </ScrollView>
+	
+	    <Button
+	        android:id="@+id/addButton"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentBottom="true"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentRight="true"
+	        android:text="Add Class" />
+	
+	</RelativeLayout>
+	        
     </RelativeLayout>
 
 </LinearLayout>

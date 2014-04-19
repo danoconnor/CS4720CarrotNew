@@ -65,6 +65,7 @@ public class MainActivity extends Activity {
 	private String username;
 	private int projectId;
 	private int state;
+	private boolean isDefaultDeptSet;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +113,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				setContentView(R.layout.pick_class_for_rating);
-				initializeAddRatingPage(username);	
+				initializeAddRatingPage(username, null, null);	
 			}
 		});
 
@@ -207,19 +208,24 @@ public class MainActivity extends Activity {
 				reqAdapter
 						.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				spin.setAdapter(reqAdapter);
-
-				final Button detailsButton = (Button) findViewById(R.id.seeDetailsButton);
-				detailsButton.setOnClickListener(new OnClickListener() {
+				spin.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 					@Override
-					public void onClick(View v) {
-						String c = (String) (spin.getSelectedItem());
-						String dept = c.substring(0, c.length() - 4);
-						String courseNum = c.substring(c.length() - 4);
-
-						setContentView(R.layout.view_rating);
+					public void onItemSelected(AdapterView<?> parent,
+							View view, int position, long id) {
+						String selectedClass = (String)(spin.getSelectedItem());
+						String dept = selectedClass.substring(0, selectedClass.length() - 4);
+						String courseNum = selectedClass.substring(selectedClass.length() - 4);
+						
 						initializeViewRatingPage(dept, courseNum);
 					}
+
+					@Override
+					public void onNothingSelected(AdapterView<?> parent) {
+						// TODO Auto-generated method stub
+						
+					}
+				
 				});
 			}
 		} catch (InterruptedException e) {
@@ -266,8 +272,8 @@ public class MainActivity extends Activity {
 				String dept = className.substring(0, className.length() - 4);
 				String courseNum = className.substring(className.length() - 4);
 				
-				setContentView(R.layout.view_rating);
-				initializeViewRatingPage(dept, courseNum);
+				setContentView(R.layout.pick_class_for_rating);
+				initializeAddRatingPage(username, dept, courseNum);
 			}
 		};
 
@@ -329,8 +335,8 @@ public class MainActivity extends Activity {
 				String dept = className.substring(0, className.length() - 4);
 				String courseNum = className.substring(className.length() - 4);
 				
-				setContentView(R.layout.view_rating);
-				initializeViewRatingPage(dept, courseNum);
+				setContentView(R.layout.pick_class_for_rating);
+				initializeAddRatingPage(username, dept, courseNum);
 			}
 		};
 		
@@ -353,7 +359,7 @@ public class MainActivity extends Activity {
 							"department", department, "courseNum", courseNum)
 							.get();
 					String isSuccess = (String) (result.get("success"));
-					Log.i("SUCCESS?", isSuccess);
+					
 					if (isSuccess.equals("true")) {
 						adapter.add(department + courseNum);
 						gView.setAdapter(adapter);
@@ -422,7 +428,7 @@ public class MainActivity extends Activity {
 		final EditText userNameField = (EditText) findViewById(R.id.usernameLoginField);
 
 		final TextView userNameTV = (TextView) findViewById(R.id.usernameTV);
-		/*RelativeLayout.LayoutParams layout = new RelativeLayout.LayoutParams(
+		RelativeLayout.LayoutParams layout = new RelativeLayout.LayoutParams(
 				RelativeLayout.LayoutParams.WRAP_CONTENT,
 				RelativeLayout.LayoutParams.WRAP_CONTENT);
 		Display display = getWindowManager().getDefaultDisplay();
@@ -430,7 +436,7 @@ public class MainActivity extends Activity {
 		display.getSize(size);
 		int marginTop = (int)(Math.round((double)(size.y) / 4.0));
 		layout.setMargins(0, marginTop, 0, 0);
-		userNameTV.setLayoutParams(layout);*/
+		userNameTV.setLayoutParams(layout);
 		
 		InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		mgr.hideSoftInputFromWindow(userNameField.getWindowToken(), 0);
@@ -522,6 +528,7 @@ public class MainActivity extends Activity {
 		});
 
 		final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.viewRatingLinearLayout);
+		linearLayout.removeAllViews();
 
 		try {
 			String url = "http://plato.cs.virginia.edu/~cs4720s14carrot/getAvgRatings";
@@ -880,7 +887,7 @@ public class MainActivity extends Activity {
 		state = WANT_STATE;
 	}
 	
-	private void initializeAddRatingPage(String user) {
+	private void initializeAddRatingPage(String user, String startDept, String startCourse) {
 		final Spinner deptSpin = (Spinner) findViewById(R.id.deptSpinner);
 		final Spinner courseSpin = (Spinner) findViewById(R.id.courseNumSpinner);
 		final Spinner profSpin = (Spinner) findViewById(R.id.profSpinner);
@@ -894,6 +901,10 @@ public class MainActivity extends Activity {
 		final ArrayAdapter<String> profAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, profNames);
 		
 		final HashMap<String, HashMap<String, HashMap<String, String>>> data = new HashMap<String, HashMap<String, HashMap<String, String>>>();
+		
+		isDefaultDeptSet = true;
+		final String sDept = startDept;
+		final String sCourse = startCourse;
 		
 		try {
 			JSONObject result = new WebServiceTask().execute(
@@ -953,6 +964,11 @@ public class MainActivity extends Activity {
 				Collections.sort(depts);
 
 				String defaultDept = "";
+				if (startDept != null)
+				{
+					defaultDept = startDept;
+				}
+				
 				for (String dept : data.keySet())
 				{
 					if (defaultDept.length() == 0)
@@ -964,6 +980,10 @@ public class MainActivity extends Activity {
 				}
 				
 				String defaultCourse = "";
+				if (startCourse != null)
+				{
+					defaultCourse = startCourse;
+				}
 				for (String course : data.get(defaultDept).keySet())
 				{
 					if (defaultCourse.length() == 0)
@@ -989,7 +1009,6 @@ public class MainActivity extends Activity {
 				
 				Collections.sort(profNames);
 
-				
 				deptAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				deptSpin.setAdapter(deptAdapter);
 				deptSpin.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -1001,6 +1020,7 @@ public class MainActivity extends Activity {
 						profNames.clear();
 						
 						String dept= (String)deptSpin.getSelectedItem();
+												
 						String defaultCourse = "";
 						for (String course : data.get(dept).keySet())
 						{
@@ -1015,6 +1035,16 @@ public class MainActivity extends Activity {
 						Collections.sort(courseNums);
 						courseSpin.setAdapter(courseAdapter);
 						
+						if (isDefaultDeptSet)
+						{
+							int coursePos = courseAdapter.getPosition(sCourse);
+							if (coursePos > 0)
+							{
+								courseSpin.setSelection(coursePos);
+							}
+						}
+						Log.i("course spin", "selection overwritten");
+						
 						for (String profId : data.get(dept).get(defaultCourse).keySet())
 						{
 							String name = data.get(dept).get(defaultCourse).get(profId);
@@ -1028,6 +1058,8 @@ public class MainActivity extends Activity {
 						
 						Collections.sort(profNames);
 						profSpin.setAdapter(profAdapter);
+						
+						isDefaultDeptSet = false;
 					}
 
 					@Override
@@ -1036,6 +1068,8 @@ public class MainActivity extends Activity {
 					}
 				
 				});
+				
+				deptSpin.setSelection(deptAdapter.getPosition(defaultDept));
 				
 				
 				courseSpin.setAdapter(courseAdapter);
@@ -1070,6 +1104,12 @@ public class MainActivity extends Activity {
 					}
 				});
 				
+				int coursePos = courseAdapter.getPosition(defaultCourse);
+				
+				
+				
+				courseSpin.setSelection(coursePos);
+				Log.i("course spin", "selection set");
 				profSpin.setAdapter(profAdapter);
 			}
 		} catch (InterruptedException e) {
@@ -1209,29 +1249,39 @@ public class MainActivity extends Activity {
 					}
 				}
 				
-				Log.i("RATING CLASS", dept + courseNum + ": " + profName + " (" + profId + "): " + instValue + ", " + diffValue + ", " + timeValue + ", " + interValue);
-				
-				String url = "http://plato.cs.virginia.edu/~cs4720s14carrot/rate/"
-						+ username
-						+ "/"
-						+ dept
-						+ "/"
-						+ courseNum
-						+ "/"
-						+ profId
-						+ "/"
-						+ instValue
-						+ "/"
-						+ diffValue
-						+ "/"
-						+ timeValue
-						+ "/" + interValue;
 				try {
-					new WebServiceTask().execute(url).get();
+					// TODO update to correct URL
+					String checkPrevRatingURL = "http://plato.cs.virginia.edu/~cs4720s14carrot/check/" + username;
+					JSONObject checkResult = new WebServiceTask().execute(checkPrevRatingURL).get();
+					
+					// TODO fix this
+					if (checkResult.getBoolean("userexists"))
+					{
+						String url = "http://plato.cs.virginia.edu/~cs4720s14carrot/rate/"
+								+ username
+								+ "/"
+								+ dept
+								+ "/"
+								+ courseNum
+								+ "/"
+								+ profId
+								+ "/"
+								+ instValue
+								+ "/"
+								+ diffValue
+								+ "/"
+								+ timeValue
+								+ "/" + interValue;
+						
+						new WebServiceTask().execute(url).get();
+					}
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
