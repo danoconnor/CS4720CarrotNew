@@ -1251,11 +1251,10 @@ public class MainActivity extends Activity {
 				
 				try {
 					// TODO update to correct URL
-					String checkPrevRatingURL = "http://plato.cs.virginia.edu/~cs4720s14carrot/check/" + username;
+					String checkPrevRatingURL = "http://plato.cs.virginia.edu/~cs4720s14carrot/hasrated/" + username + "/" + dept + "/" + courseNum;
 					JSONObject checkResult = new WebServiceTask().execute(checkPrevRatingURL).get();
 					
-					// TODO fix this
-					if (checkResult.getBoolean("userexists"))
+					if (!checkResult.getBoolean("hasrated"))
 					{
 						String url = "http://plato.cs.virginia.edu/~cs4720s14carrot/rate/"
 								+ username
@@ -1274,6 +1273,11 @@ public class MainActivity extends Activity {
 								+ "/" + interValue;
 						
 						new WebServiceTask().execute(url).get();
+					}
+					else
+					{
+						Toast toast = Toast.makeText(v.getContext(), "You have already rated this class!\nRating not submitted", Toast.LENGTH_SHORT);
+						toast.show();
 					}
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
