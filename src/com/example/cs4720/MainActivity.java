@@ -113,7 +113,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				setContentView(R.layout.pick_class_for_rating);
-				initializeAddRatingPage(username, null, null);	
+				initializeAddRatingPage(username, null, null);
 			}
 		});
 
@@ -213,19 +213,21 @@ public class MainActivity extends Activity {
 					@Override
 					public void onItemSelected(AdapterView<?> parent,
 							View view, int position, long id) {
-						String selectedClass = (String)(spin.getSelectedItem());
-						String dept = selectedClass.substring(0, selectedClass.length() - 4);
-						String courseNum = selectedClass.substring(selectedClass.length() - 4);
-						
+						String selectedClass = (String) (spin.getSelectedItem());
+						String dept = selectedClass.substring(0,
+								selectedClass.length() - 4);
+						String courseNum = selectedClass
+								.substring(selectedClass.length() - 4);
+
 						initializeViewRatingPage(dept, courseNum);
 					}
 
 					@Override
 					public void onNothingSelected(AdapterView<?> parent) {
 						// TODO Auto-generated method stub
-						
+
 					}
-				
+
 				});
 			}
 		} catch (InterruptedException e) {
@@ -235,6 +237,10 @@ public class MainActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		// add two buttons functionalities:
+		// I want to take this class --> Add to list
+		// I've already taken this class --> Add to taken classes
 
 		state = REQ_VIEW_STATE;
 	}
@@ -265,13 +271,13 @@ public class MainActivity extends Activity {
 		});
 
 		OnClickListener listener = new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View view) {
 				String className = ((Button) view).getText().toString();
 				String dept = className.substring(0, className.length() - 4);
 				String courseNum = className.substring(className.length() - 4);
-				
+
 				setContentView(R.layout.pick_class_for_rating);
 				initializeAddRatingPage(username, dept, courseNum);
 			}
@@ -326,20 +332,20 @@ public class MainActivity extends Activity {
 		final EditText courseNumField = (EditText) findViewById(R.id.courseNumField);
 		courseNumField.setText(c);
 		final ArrayList<String> data = new ArrayList<String>();
-		
+
 		OnClickListener listener = new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View view) {
 				String className = ((Button) view).getText().toString();
 				String dept = className.substring(0, className.length() - 4);
 				String courseNum = className.substring(className.length() - 4);
-				
+
 				setContentView(R.layout.pick_class_for_rating);
 				initializeAddRatingPage(username, dept, courseNum);
 			}
 		};
-		
+
 		final ButtonAdapter adapter = new ButtonAdapter(this, data, listener);
 		final GridView gView = (GridView) findViewById(R.id.reqsGridView);
 
@@ -359,11 +365,11 @@ public class MainActivity extends Activity {
 							"department", department, "courseNum", courseNum)
 							.get();
 					String isSuccess = (String) (result.get("success"));
-					
+
 					if (isSuccess.equals("true")) {
 						adapter.add(department + courseNum);
 						gView.setAdapter(adapter);
-						
+
 					} else {
 						departmentField.setText("");
 						courseNumField.setText("");
@@ -382,7 +388,7 @@ public class MainActivity extends Activity {
 				mgr.hideSoftInputFromWindow(courseNumField.getWindowToken(), 0);
 			}
 		});
-		
+
 		try {
 			JSONObject result = new WebServiceTask().execute(
 					"http://plato.cs.virginia.edu/~cs4720s14carrot/taken/"
@@ -428,16 +434,16 @@ public class MainActivity extends Activity {
 		final EditText userNameField = (EditText) findViewById(R.id.usernameLoginField);
 
 		final TextView userNameTV = (TextView) findViewById(R.id.usernameTV);
-//		RelativeLayout.LayoutParams layout = new RelativeLayout.LayoutParams(
-//				RelativeLayout.LayoutParams.WRAP_CONTENT,
-//				RelativeLayout.LayoutParams.WRAP_CONTENT);
-//		Display display = getWindowManager().getDefaultDisplay();
-//		Point size = new Point();
-//		display.getSize(size);
-//		int marginTop = (int)(Math.round((double)(size.y) / 4.0));
-//		layout.setMargins(0, marginTop, 0, 0);
-//		userNameTV.setLayoutParams(layout);
-		
+		// RelativeLayout.LayoutParams layout = new RelativeLayout.LayoutParams(
+		// RelativeLayout.LayoutParams.WRAP_CONTENT,
+		// RelativeLayout.LayoutParams.WRAP_CONTENT);
+		// Display display = getWindowManager().getDefaultDisplay();
+		// Point size = new Point();
+		// display.getSize(size);
+		// int marginTop = (int)(Math.round((double)(size.y) / 4.0));
+		// layout.setMargins(0, marginTop, 0, 0);
+		// userNameTV.setLayoutParams(layout);
+
 		InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		mgr.hideSoftInputFromWindow(userNameField.getWindowToken(), 0);
 
@@ -457,12 +463,15 @@ public class MainActivity extends Activity {
 							String userExists = result.getString("userexists");
 
 							if (userExists.equals("true")) {
-								
-								String projectIdURL = "http://plato.cs.virginia.edu/~cs4720s14carrot/getProjectUser/" + username;
-								JSONObject projectIdResult = new WebServiceTask().execute(projectIdURL).get();
-								
+
+								String projectIdURL = "http://plato.cs.virginia.edu/~cs4720s14carrot/getProjectUser/"
+										+ username;
+								JSONObject projectIdResult = new WebServiceTask()
+										.execute(projectIdURL).get();
+
 								projectId = projectIdResult.getInt("project");
-								Log.i("PROJECT ID FOR " + username, projectId + "");
+								Log.i("PROJECT ID FOR " + username, projectId
+										+ "");
 								setContentView(R.layout.requirements_page);
 								initializeRequirementsViewPage();
 							} else {
@@ -532,7 +541,8 @@ public class MainActivity extends Activity {
 
 		try {
 			String url = "http://plato.cs.virginia.edu/~cs4720s14carrot/getAvgRatings";
-			JSONObject result = new WebServiceTask().execute(url, "deptID", dept, "courseNum", courseNum).get();
+			JSONObject result = new WebServiceTask().execute(url, "deptID",
+					dept, "courseNum", courseNum).get();
 
 			if (result != null) {
 				for (int i = 0; i < result.names().length(); i++) {
@@ -561,23 +571,42 @@ public class MainActivity extends Activity {
 
 						String value = result.getString(profId);
 						String currentRating = "";
+						double totalScore = 0;
+						int ratingNumber = 1;
 						for (int i = 0; i < value.length(); i++) {
 							if (Character.isDigit(value.charAt(i))
 									|| value.charAt(i) == '.') {
 								currentRating += value.charAt(i);
 							} else {
-								
-								double ratingDouble = Double.parseDouble(currentRating);
+
+								double ratingDouble = Double
+										.parseDouble(currentRating);
 								ratingDouble = Math.round(ratingDouble * 100) / 100.0;
+								if (ratingNumber == 2 || ratingNumber == 3) {
+									totalScore += (5 - ratingDouble);
+									Log.i("firstif", "inverses calculated");
+								} else {
+									totalScore += ratingDouble;
+								}
 								ratingsList.add(ratingDouble + "");
 								currentRating = new String();
+								ratingNumber++;
 							}
 						}
 
 						if (currentRating.length() > 0) {
-							double ratingDouble = Double.parseDouble(currentRating);
+							double ratingDouble = Double
+									.parseDouble(currentRating);
 							ratingDouble = Math.round(ratingDouble * 100) / 100.0;
 							ratingsList.add(ratingDouble + "");
+							if (ratingNumber == 2 || ratingNumber == 3) {
+								totalScore += (5 - ratingDouble);
+								Log.i("secondif", "inverses calculated");
+							} else {
+								totalScore += ratingDouble;
+							}
+							ratingNumber++;
+							
 						}
 
 						RelativeLayout.LayoutParams rowLayout = new RelativeLayout.LayoutParams(
@@ -604,11 +633,12 @@ public class MainActivity extends Activity {
 						linearLayout.addView(timeRating);
 
 						TextView intRating = new TextView(this);
-						intRating
-								.setText("Interest Rating: "
-										+ ratingsList.get(3));
+						intRating.setText("Interest Rating: "
+								+ ratingsList.get(3));
 						intRating.setLayoutParams(rowLayout);
 						linearLayout.addView(intRating);
+						
+						
 					}
 
 					// Add separator line between rows
@@ -730,19 +760,23 @@ public class MainActivity extends Activity {
 									Log.i("ADD USER", "DONE ADDING USER");
 									String success = addUserResult
 											.getString("success");
-									
+
 									Log.i("CREATING PROJECT", "START");
-									String createProjectURL = "http://peppernode.azurewebsites.net/project/add/" + newUsername;
-									JSONObject createProjectResult = new WebServiceTask().execute(createProjectURL).get();
+									String createProjectURL = "http://peppernode.azurewebsites.net/project/add/"
+											+ newUsername;
+									JSONObject createProjectResult = new WebServiceTask()
+											.execute(createProjectURL).get();
 									Log.i("CREATING PROJECT", "DONE");
-									if (createProjectResult != null)
-									{
-											int id = createProjectResult.getInt("projectID");
-											Log.i("CREATED PROJECT", id + "");
-										
-											String addProjectURL = "http://plato.cs.virginia.edu/~cs4720s14carrot/addProjectUser/" + newUsername + "/" + id;
-											new WebServiceTask().execute(addProjectURL).get();
-											
+									if (createProjectResult != null) {
+										int id = createProjectResult
+												.getInt("projectID");
+										Log.i("CREATED PROJECT", id + "");
+
+										String addProjectURL = "http://plato.cs.virginia.edu/~cs4720s14carrot/addProjectUser/"
+												+ newUsername + "/" + id;
+										new WebServiceTask().execute(
+												addProjectURL).get();
+
 										if (success.equals("true")) {
 											Toast toast = Toast.makeText(
 													v.getContext(),
@@ -761,13 +795,14 @@ public class MainActivity extends Activity {
 
 										setContentView(R.layout.activity_main);
 										initializeLoginPage();
-									}
-									else
-									{
-										Toast toast = Toast.makeText(v.getContext(), "CABBAGE ERROR", Toast.LENGTH_SHORT);
+									} else {
+										Toast toast = Toast.makeText(
+												v.getContext(),
+												"CABBAGE ERROR",
+												Toast.LENGTH_SHORT);
 										toast.show();
 									}
-									
+
 								} else {
 									pw1.setText("");
 									pw2.setText("");
@@ -821,56 +856,54 @@ public class MainActivity extends Activity {
 
 		state = CREATE_USER_STATE;
 	}
-	
-	private void initializePlanSemesterPage()
-	{
+
+	private void initializePlanSemesterPage() {
 		final EditText classField = (EditText) findViewById(R.id.classField);
-		
+
 		final ArrayList<String> data = new ArrayList<String>();
-		final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, data);
+		final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_1, android.R.id.text1, data);
 		ListView list = (ListView) findViewById(R.id.listView);
 		list.setAdapter(adapter);
-		
+
 		try {
-			String url = "http://peppernode.azurewebsites.net/project/view/tasks/" + projectId;
+			String url = "http://peppernode.azurewebsites.net/project/view/tasks/"
+					+ projectId;
 			String result = new PlainTextWebService().execute(url).get();
-			
+
 			int index = result.indexOf("taskTitle");
-			while (index != -1)
-			{
+			while (index != -1) {
 				int titleStart = result.indexOf(":", index + 1) + 2;
 				int titleEnd = result.indexOf(",", titleStart + 1) - 1;
 				String title = result.substring(titleStart, titleEnd);
-				if ( ! title.equals("Initiliaze Project") ) {
+				if (!title.equals("Initiliaze Project")) {
 					data.add(title);
 				}
-				
+
 				index = result.indexOf("taskTitle", index + 1);
 			}
-			
-			
-		} catch (Exception e)
-		{
+
+		} catch (Exception e) {
 			Log.i("ERROR LOADING PROJECT DATA", e.toString());
 		}
-		
-		
+
 		Button addButton = (Button) findViewById(R.id.addButton);
 		addButton.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
-				if (classField.getText().length() > 0)
-				{
+				if (classField.getText().length() > 0) {
 					String input = classField.getText().toString();
-					String url = "http://peppernode.azurewebsites.net/task/add/" + projectId + "/" + input + "/" + "DONE";
+					String url = "http://peppernode.azurewebsites.net/task/add/"
+							+ projectId + "/" + input + "/" + "DONE";
 					try {
 						new PlainTextWebService().execute(url).get();
 						classField.setText("");
-						
-						Toast toast = Toast.makeText(arg0.getContext(), "Class added", Toast.LENGTH_SHORT);
+
+						Toast toast = Toast.makeText(arg0.getContext(),
+								"Class added", Toast.LENGTH_SHORT);
 						toast.show();
-						
+
 						adapter.add(input);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
@@ -882,134 +915,128 @@ public class MainActivity extends Activity {
 				}
 			}
 		});
-		
-		
+
 		state = WANT_STATE;
 	}
-	
-	private void initializeAddRatingPage(String user, String startDept, String startCourse) {
+
+	private void initializeAddRatingPage(String user, String startDept,
+			String startCourse) {
 		final Spinner deptSpin = (Spinner) findViewById(R.id.deptSpinner);
 		final Spinner courseSpin = (Spinner) findViewById(R.id.courseNumSpinner);
 		final Spinner profSpin = (Spinner) findViewById(R.id.profSpinner);
-		
+
 		final ArrayList<String> depts = new ArrayList<String>();
 		final ArrayList<String> courseNums = new ArrayList<String>();
 		final ArrayList<String> profNames = new ArrayList<String>();
-		
-		final ArrayAdapter<String> deptAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, depts);
-		final ArrayAdapter<String> courseAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, courseNums);
-		final ArrayAdapter<String> profAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, profNames);
-		
+
+		final ArrayAdapter<String> deptAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, depts);
+		final ArrayAdapter<String> courseAdapter = new ArrayAdapter<String>(
+				this, android.R.layout.simple_spinner_item, courseNums);
+		final ArrayAdapter<String> profAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, profNames);
+
 		final HashMap<String, HashMap<String, HashMap<String, String>>> data = new HashMap<String, HashMap<String, HashMap<String, String>>>();
-		
+
 		isDefaultDeptSet = true;
 		final String sDept = startDept;
 		final String sCourse = startCourse;
-		
+
 		try {
 			JSONObject result = new WebServiceTask().execute(
 					"http://plato.cs.virginia.edu/~cs4720s14carrot/classesTaken/"
 							+ user).get();
-			
+
 			if (result != null) {
 				Iterator<String> it = (Iterator<String>) (result.keys());
 
-				
-
 				while (it.hasNext()) {
 					String className = it.next();
-					
-					String dept = className.substring(0, className.length() - 4);
-					
+
+					String dept = className
+							.substring(0, className.length() - 4);
+
 					HashMap<String, HashMap<String, String>> courseData;
-					if (data.containsKey(dept))
-					{
+					if (data.containsKey(dept)) {
 						courseData = data.get(dept);
-					}
-					else
-					{
+					} else {
 						courseData = new HashMap<String, HashMap<String, String>>();
 						data.put(dept, courseData);
 					}
-					
-					String courseNum = className.substring(className.length() - 4);
+
+					String courseNum = className
+							.substring(className.length() - 4);
 					HashMap<String, String> profData;
-					
-					if (courseData.containsKey(courseNum))
-					{
+
+					if (courseData.containsKey(courseNum)) {
 						profData = courseData.get(courseNum);
-					}
-					else
-					{
+					} else {
 						profData = new HashMap<String, String>();
 						courseData.put(courseNum, profData);
 					}
-					
-					String getProfUrl = "http://plato.cs.virginia.edu/~cs4720s14carrot/getProfessorsForCourse/" + dept + "/" + courseNum;
-					JSONObject profResult = new WebServiceTask().execute(getProfUrl).get();
-					
-					if (profResult != null)
-					{
-						Iterator<String> profIt = (Iterator<String>) (profResult.keys());
-						while (profIt.hasNext())
-						{
+
+					String getProfUrl = "http://plato.cs.virginia.edu/~cs4720s14carrot/getProfessorsForCourse/"
+							+ dept + "/" + courseNum;
+					JSONObject profResult = new WebServiceTask().execute(
+							getProfUrl).get();
+
+					if (profResult != null) {
+						Iterator<String> profIt = (Iterator<String>) (profResult
+								.keys());
+						while (profIt.hasNext()) {
 							String profId = profIt.next();
-							String profName = (String) (profResult.getString(profId));
-							
+							String profName = (String) (profResult
+									.getString(profId));
+
 							profData.put(profId, profName);
 						}
 					}
 				}
-				
+
 				Collections.sort(depts);
 
 				String defaultDept = "";
-				if (startDept != null)
-				{
+				if (startDept != null) {
 					defaultDept = startDept;
 				}
-				
-				for (String dept : data.keySet())
-				{
-					if (defaultDept.length() == 0)
-					{
+
+				for (String dept : data.keySet()) {
+					if (defaultDept.length() == 0) {
 						defaultDept = dept;
 					}
-					
+
 					depts.add(dept);
 				}
-				
+
 				String defaultCourse = "";
-				if (startCourse != null)
-				{
+				if (startCourse != null) {
 					defaultCourse = startCourse;
 				}
-				for (String course : data.get(defaultDept).keySet())
-				{
-					if (defaultCourse.length() == 0)
-					{
+				for (String course : data.get(defaultDept).keySet()) {
+					if (defaultCourse.length() == 0) {
 						defaultCourse = course;
 					}
-					
+
 					courseNums.add(course);
 				}
-				
+
 				Collections.sort(courseNums);
-				
-				for (String profId : data.get(defaultDept).get(defaultCourse).keySet())
-				{
-					String name = data.get(defaultDept).get(defaultCourse).get(profId);
-					if (name.trim().length() == 0)
-					{
+
+				for (String profId : data.get(defaultDept).get(defaultCourse)
+						.keySet()) {
+					String name = data.get(defaultDept).get(defaultCourse)
+							.get(profId);
+					if (name.trim().length() == 0) {
 						name = "Staff";
 					}
-					
+
 					profNames.add(name);
 				}
-				
+
 				Collections.sort(profNames);
 
-				deptAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				deptAdapter
+						.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				deptSpin.setAdapter(deptAdapter);
 				deptSpin.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -1018,96 +1045,92 @@ public class MainActivity extends Activity {
 							View view, int position, long id) {
 						courseNums.clear();
 						profNames.clear();
-						
-						String dept= (String)deptSpin.getSelectedItem();
-												
+
+						String dept = (String) deptSpin.getSelectedItem();
+
 						String defaultCourse = "";
-						for (String course : data.get(dept).keySet())
-						{
-							if (defaultCourse.length() == 0)
-							{
+						for (String course : data.get(dept).keySet()) {
+							if (defaultCourse.length() == 0) {
 								defaultCourse = course;
 							}
-							
+
 							courseNums.add(course);
 						}
-						
+
 						Collections.sort(courseNums);
 						courseSpin.setAdapter(courseAdapter);
-						
-						if (isDefaultDeptSet)
-						{
+
+						if (isDefaultDeptSet) {
 							int coursePos = courseAdapter.getPosition(sCourse);
-							if (coursePos > 0)
-							{
+							if (coursePos > 0) {
 								courseSpin.setSelection(coursePos);
 							}
 						}
 						Log.i("course spin", "selection overwritten");
-						
-						for (String profId : data.get(dept).get(defaultCourse).keySet())
-						{
-							String name = data.get(dept).get(defaultCourse).get(profId);
-							if (name.trim().length() == 0)
-							{
+
+						for (String profId : data.get(dept).get(defaultCourse)
+								.keySet()) {
+							String name = data.get(dept).get(defaultCourse)
+									.get(profId);
+							if (name.trim().length() == 0) {
 								name = "Staff";
 							}
-							
+
 							profNames.add(name);
 						}
-						
+
 						Collections.sort(profNames);
 						profSpin.setAdapter(profAdapter);
-						
+
 						isDefaultDeptSet = false;
 					}
 
 					@Override
 					public void onNothingSelected(AdapterView<?> parent) {
-						
+
 					}
-				
+
 				});
-				
+
 				deptSpin.setSelection(deptAdapter.getPosition(defaultDept));
-				
-				
+
 				courseSpin.setAdapter(courseAdapter);
-				courseSpin.setOnItemSelectedListener(new OnItemSelectedListener() {
+				courseSpin
+						.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-					@Override
-					public void onItemSelected(AdapterView<?> parent,
-							View view, int position, long id) {
-						profNames.clear();
-						
-						String dept = (String)deptSpin.getSelectedItem();
-						String course = (String)courseSpin.getSelectedItem();
-						for (String profId : data.get(dept).get(course).keySet())
-						{
-							String name = data.get(dept).get(course).get(profId);
-							if (name.trim().length() == 0)
-							{
-								name = "Staff";
+							@Override
+							public void onItemSelected(AdapterView<?> parent,
+									View view, int position, long id) {
+								profNames.clear();
+
+								String dept = (String) deptSpin
+										.getSelectedItem();
+								String course = (String) courseSpin
+										.getSelectedItem();
+								for (String profId : data.get(dept).get(course)
+										.keySet()) {
+									String name = data.get(dept).get(course)
+											.get(profId);
+									if (name.trim().length() == 0) {
+										name = "Staff";
+									}
+
+									profNames.add(name);
+								}
+
+								Collections.sort(profNames);
+								profSpin.setAdapter(profAdapter);
 							}
-							
-							profNames.add(name);
-						}
-						
-						Collections.sort(profNames);
-						profSpin.setAdapter(profAdapter);
-					}
 
-					@Override
-					public void onNothingSelected(AdapterView<?> parent) {
-						// TODO Auto-generated method stub
-						
-					}
-				});
-				
+							@Override
+							public void onNothingSelected(AdapterView<?> parent) {
+								// TODO Auto-generated method stub
+
+							}
+						});
+
 				int coursePos = courseAdapter.getPosition(defaultCourse);
-				
-				
-				
+
 				courseSpin.setSelection(coursePos);
 				Log.i("course spin", "selection set");
 				profSpin.setAdapter(profAdapter);
@@ -1122,7 +1145,7 @@ public class MainActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		final SeekBar instSeek = (SeekBar) findViewById(R.id.instructorRatingSeek);
 		final TextView instValue = (TextView) findViewById(R.id.instructorRatingValue);
 		instSeek.setProgress(50);
@@ -1232,30 +1255,32 @@ public class MainActivity extends Activity {
 				double diffValue = diffSeek.getProgress() / 20.0;
 				double timeValue = timeSeek.getProgress() / 20.0;
 				double interValue = interSeek.getProgress() / 20.0;
-				
-				String dept = (String)deptSpin.getSelectedItem();
-				String courseNum = (String)courseSpin.getSelectedItem();
-				String profName = (String)profSpin.getSelectedItem();
-				
-				HashMap<String, String> profData = data.get(dept).get(courseNum);
-				
+
+				String dept = (String) deptSpin.getSelectedItem();
+				String courseNum = (String) courseSpin.getSelectedItem();
+				String profName = (String) profSpin.getSelectedItem();
+
+				HashMap<String, String> profData = data.get(dept)
+						.get(courseNum);
+
 				String profId = "";
-				for (String pId : profData.keySet())
-				{
-					if (profData.get(pId).equals(profName) || (profName.equals("Staff") && profData.get(pId).trim().length() == 0))
-					{
+				for (String pId : profData.keySet()) {
+					if (profData.get(pId).equals(profName)
+							|| (profName.equals("Staff") && profData.get(pId)
+									.trim().length() == 0)) {
 						profId = pId;
 						break;
 					}
 				}
-				
+
 				try {
 					// TODO update to correct URL
-					String checkPrevRatingURL = "http://plato.cs.virginia.edu/~cs4720s14carrot/hasrated/" + username + "/" + dept + "/" + courseNum;
-					JSONObject checkResult = new WebServiceTask().execute(checkPrevRatingURL).get();
-					
-					if (!checkResult.getBoolean("hasrated"))
-					{
+					String checkPrevRatingURL = "http://plato.cs.virginia.edu/~cs4720s14carrot/hasrated/"
+							+ username + "/" + dept + "/" + courseNum;
+					JSONObject checkResult = new WebServiceTask().execute(
+							checkPrevRatingURL).get();
+
+					if (!checkResult.getBoolean("hasrated")) {
 						String url = "http://plato.cs.virginia.edu/~cs4720s14carrot/rate/"
 								+ username
 								+ "/"
@@ -1268,15 +1293,14 @@ public class MainActivity extends Activity {
 								+ instValue
 								+ "/"
 								+ diffValue
-								+ "/"
-								+ timeValue
-								+ "/" + interValue;
-						
+								+ "/" + timeValue + "/" + interValue;
+
 						new WebServiceTask().execute(url).get();
-					}
-					else
-					{
-						Toast toast = Toast.makeText(v.getContext(), "You have already rated this class!\nRating not submitted", Toast.LENGTH_SHORT);
+					} else {
+						Toast toast = Toast.makeText(
+								v.getContext(),
+								"You have already rated this class!\nRating not submitted",
+								Toast.LENGTH_SHORT);
 						toast.show();
 					}
 				} catch (InterruptedException e) {
@@ -1290,16 +1314,16 @@ public class MainActivity extends Activity {
 					e.printStackTrace();
 				}
 
-				//setContentView(R.layout.view_classes);
-				//initializeViewClassesPage();
+				// setContentView(R.layout.view_classes);
+				// initializeViewClassesPage();
 				setContentView(R.layout.add_class_form);
 				initializeAddClassForm(" ", " ");
 			}
 		});
-		
+
 		state = PICK_RATING_STATE;
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		Log.i("Back button pressed", "button pressed");
