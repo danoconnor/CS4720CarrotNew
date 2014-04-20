@@ -103,7 +103,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				setContentView(R.layout.classes_that_you_want);
-				initializePlanSemesterPage();
+				initializePlanSemesterPage("", "");
 			}
 		});
 
@@ -183,12 +183,12 @@ public class MainActivity extends Activity {
 		// call web service and get list of results that meet the requirement
 		// for each result, add a row to the LinearLayout with the class name,
 		// button to add class, button to view class ratings
-
+		final Spinner spin = (Spinner) findViewById(R.id.fulfillReqSpinner);
 		try {
 			JSONObject result = new WebServiceTask().execute(
 					"http://plato.cs.virginia.edu/~cs4720s14carrot/getclasses/"
 							+ requirement + "/" + username).get();
-
+			
 			if (result != null) {
 				Iterator<String> it = (Iterator<String>) (result.keys());
 
@@ -202,7 +202,7 @@ public class MainActivity extends Activity {
 
 				Collections.sort(data);
 
-				final Spinner spin = (Spinner) findViewById(R.id.fulfillReqSpinner);
+				
 				ArrayAdapter<String> reqAdapter = new ArrayAdapter<String>(
 						this, android.R.layout.simple_spinner_item, data);
 				reqAdapter
@@ -235,7 +235,36 @@ public class MainActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
+		final Button addClassesTakenButton = (Button) findViewById(R.id.addTakenClassButton);
+		addClassesTakenButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				String classSelected = (String) spin.getSelectedItem();
+				String dept = classSelected.substring(0, classSelected.length() - 4);
+				String courseNum = classSelected.substring(classSelected.length() - 4);
+				
+				setContentView(R.layout.add_class_form);
+				initializeAddClassForm(dept, courseNum);
+			}
+		});
+		
+		
+		final Button addPlanClassesButton = (Button) findViewById(R.id.addPlanClassButton);
+		addPlanClassesButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				String classSelected = (String) spin.getSelectedItem();
+				String dept = classSelected.substring(0, classSelected.length() - 4);
+				String courseNum = classSelected.substring(classSelected.length() - 4);
+				
+				setContentView(R.layout.classes_that_you_want);
+				initializePlanSemesterPage(dept, courseNum);
+			}
+		});
+		
 		state = REQ_VIEW_STATE;
 	}
 
@@ -260,7 +289,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				setContentView(R.layout.classes_that_you_want);
-				initializePlanSemesterPage();
+				initializePlanSemesterPage("", "");
 			}
 		});
 
@@ -513,19 +542,6 @@ public class MainActivity extends Activity {
 	private void initializeViewRatingPage(String dept, String courseNum) {
 		final TextView header = (TextView) findViewById(R.id.viewRatingHeader);
 		header.setText("Ratings for " + dept + courseNum);
-
-		final String d = dept;
-		final String c = courseNum;
-
-		final Button addButton = (Button) findViewById(R.id.addButton);
-		addButton.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				setContentView(R.layout.add_class_form);
-				initializeAddClassForm(d, c);
-			}
-		});
 
 		final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.viewRatingLinearLayout);
 		linearLayout.removeAllViews();
@@ -822,9 +838,10 @@ public class MainActivity extends Activity {
 		state = CREATE_USER_STATE;
 	}
 	
-	private void initializePlanSemesterPage()
+	private void initializePlanSemesterPage(String dept, String courseNum)
 	{
 		final EditText classField = (EditText) findViewById(R.id.classField);
+		classField.setText(dept + courseNum);
 		
 		final ArrayList<String> data = new ArrayList<String>();
 		final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, data);

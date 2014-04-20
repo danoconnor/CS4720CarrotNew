@@ -75,7 +75,7 @@
 	    </ScrollView>
 	
 	    <Button
-	        android:id="@+id/addButton"
+	        android:id="@+id/addPlanClassButton"
 	        android:layout_width="300dp"
 	        android:layout_height="100dp"
 	        android:layout_alignParentBottom="true"
@@ -85,7 +85,7 @@
 	        android:text="I want to take this class!" />
 	    
 	    <Button
-	        android:id="@+id/addButton"
+	        android:id="@+id/addTakenClassButton"
 	        android:layout_width="300dp"
 	        android:layout_height="100dp"
 	        android:layout_marginRight="100dp"
