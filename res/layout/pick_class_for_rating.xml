@@ -10,6 +10,18 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:text="Pick a Class to Rate"
+        android:textSize="40dp"
+        android:textColor="@color/blue"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+    <TextView
+        android:id="@+id/subtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:text="If you have already rated a class, you will not be able to again."
+        android:textSize="20dp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -18,18 +30,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textView1"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="89dp"
+        android:layout_marginLeft="220dp"
+        android:layout_marginTop="90dp"
         android:text="Department:"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Spinner
         android:id="@+id/deptSpinner"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_below="@+id/textView1"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="87dp"
         android:layout_toRightOf="@+id/textView2" />
 
     <TextView
@@ -37,42 +48,44 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/textView2"
-        android:layout_below="@+id/deptSpinner"
-        android:layout_marginTop="32dp"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="25dp"
         android:text="Course Number:"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Spinner
         android:id="@+id/courseNumSpinner"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/deptSpinner"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/deptSpinner" />
+        android:layout_below="@+id/textView2" 
+        android:layout_marginTop="22dp"/>
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/textView3"
-        android:layout_below="@+id/courseNumSpinner"
-        android:layout_marginTop="22dp"
-        android:text="Professor"
+        android:layout_below="@+id/textView3"
+        android:layout_marginTop="25dp"
+        android:text="Professor:"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Spinner
         android:id="@+id/profSpinner"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/courseNumSpinner"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/courseNumSpinner" />
+        android:layout_below="@+id/textView3" 
+        android:layout_marginTop="22dp"/>
     
 	<RelativeLayout 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_below="@+id/profSpinner"
-    android:paddingTop="50dp"
+    android:paddingTop="100dp"
+    android:paddingLeft="45dp"
+    android:paddingRight="45dp"
     android:layout_alignParentBottom="true" >
 
     <TextView
@@ -91,15 +104,25 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_marginTop="16dp"
-        android:text="Instructor Rating"
+        android:text="Instructor Rating:"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+    <TextView
+        android:id="@+id/subtext1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/welcomeHeader"
+        android:text="(0: absolute worst, 100: coolest ever)"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <SeekBar
         android:id="@+id/instructorRatingSeek"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/welcomeHeader"
+        android:layout_below="@+id/subtext1"
+        
         android:layout_toLeftOf="@+id/instructorRatingValue" />
 
     <TextView
@@ -109,7 +132,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/instructorRatingSeek"
         android:layout_marginTop="15dp"
-        android:text="Difficulty Rating"
+        android:text="Difficulty Rating:"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -123,12 +146,12 @@
         android:layout_marginRight="10dp" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/subtext2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/TextView02"
-        android:text="(0=easy ,100=impossible)"
+        android:text="(0: A's for everyone!, 100: C's for everyone!)"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <SeekBar
@@ -137,7 +160,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignRight="@+id/instructorRatingSeek"
-        android:layout_below="@+id/textView2" />
+        android:layout_below="@+id/subtext2" />
 
     <TextView
         android:id="@+id/TextView03"
@@ -146,7 +169,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/difficultRatingSeek"
         android:layout_marginTop="15dp"
-        android:text="Time Commitment Rating"
+        android:text="Time Commitment:"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -165,7 +188,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/TextView03"
-        android:text="(0=minimal time ,100=your life is over)"
+        android:text="(0: 0 Hours/Week, 100: 20+ Hours/Week)"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <SeekBar
@@ -182,7 +205,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignRight="@+id/timeRatingSeek"
-        android:layout_below="@+id/TextView05" />
+        android:layout_below="@+id/subtext4" />
 
     <TextView
         android:id="@+id/TextView05"
@@ -191,7 +214,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/timeRatingSeek"
         android:layout_marginTop="15dp"
-        android:text="Interest Rating"
+        android:text="Interest Rating:"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -203,15 +226,24 @@
         android:text="99"
         android:textAppearance="?android:attr/textAppearanceMedium" 
         android:layout_marginRight="10dp" />
+    
+    <TextView
+        android:id="@+id/subtext4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/TextView05"
+        android:text="(0: couldn't stay awake, 100: can I take it again?)"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <Button
         android:id="@+id/submitRatingButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:text="Submit" />
+        android:layout_width="150dp"
+        android:layout_height="70dp"
+        android:layout_alignTop="@+id/interestRatingSeek"
+        android:layout_marginTop="200dp"
+        android:layout_centerHorizontal="true"
+        android:text="Submit Rating" />
 
 </RelativeLayout>
 

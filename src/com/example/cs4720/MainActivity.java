@@ -428,15 +428,15 @@ public class MainActivity extends Activity {
 		final EditText userNameField = (EditText) findViewById(R.id.usernameLoginField);
 
 		final TextView userNameTV = (TextView) findViewById(R.id.usernameTV);
-		RelativeLayout.LayoutParams layout = new RelativeLayout.LayoutParams(
-				RelativeLayout.LayoutParams.WRAP_CONTENT,
-				RelativeLayout.LayoutParams.WRAP_CONTENT);
-		Display display = getWindowManager().getDefaultDisplay();
-		Point size = new Point();
-		display.getSize(size);
-		int marginTop = (int)(Math.round((double)(size.y) / 4.0));
-		layout.setMargins(0, marginTop, 0, 0);
-		userNameTV.setLayoutParams(layout);
+//		RelativeLayout.LayoutParams layout = new RelativeLayout.LayoutParams(
+//				RelativeLayout.LayoutParams.WRAP_CONTENT,
+//				RelativeLayout.LayoutParams.WRAP_CONTENT);
+//		Display display = getWindowManager().getDefaultDisplay();
+//		Point size = new Point();
+//		display.getSize(size);
+//		int marginTop = (int)(Math.round((double)(size.y) / 4.0));
+//		layout.setMargins(0, marginTop, 0, 0);
+//		userNameTV.setLayoutParams(layout);
 		
 		InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		mgr.hideSoftInputFromWindow(userNameField.getWindowToken(), 0);
@@ -1286,8 +1286,10 @@ public class MainActivity extends Activity {
 					e.printStackTrace();
 				}
 
-				setContentView(R.layout.view_classes);
-				initializeViewClassesPage();
+				//setContentView(R.layout.view_classes);
+				//initializeViewClassesPage();
+				setContentView(R.layout.add_class_form);
+				initializeAddClassForm(" ", " ");
 			}
 		});
 		

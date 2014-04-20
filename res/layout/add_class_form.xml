@@ -42,7 +42,7 @@
         android:layout_below="@+id/departmentField"
         android:layout_marginLeft="200dp"
         android:paddingTop="5dp"
-        android:text="Course Number"
+        android:text="Course Number:"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Button
@@ -52,7 +52,7 @@
         android:layout_alignTop="@+id/courseNum"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp"
-        android:text="Add Class" />
+        android:text="Add to Classes Taken" />
 
     <EditText
         android:id="@+id/courseNumField"
@@ -61,6 +61,7 @@
         android:layout_alignBaseline="@+id/courseNum"
         android:layout_alignBottom="@+id/courseNum"
         android:layout_toRightOf="@+id/courseNum"
+        android:paddingTop="10dp"
         android:ems="10"
         android:inputType="number" />
 
@@ -79,10 +80,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/courseNum"
         android:layout_marginBottom="125dp"
-        android:layout_toLeftOf="@+id/addClassButton"
         android:layout_marginLeft="228dp"
-        android:text="Department"
+        android:text="Department:"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 

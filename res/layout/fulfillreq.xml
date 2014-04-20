@@ -13,13 +13,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="68dp"
+            android:layout_marginTop="15dp"
             android:text="The following classes fill the ________ requirement. Choose one to see information about that class:"
+            android:textSize="30dp"
+            android:textAlignment="center"
+            android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
+        <TextView
+            android:id="@+id/select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/fulfillReqSpinner"
+            android:text="Select:"
+            android:textSize="20dp" 
+            android:layout_alignBottom="@+id/fulfillReqSpinner"/>
+            
         <Spinner
             android:id="@+id/fulfillReqSpinner"
-            android:layout_width="200dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/header"
             android:layout_centerHorizontal="true"
@@ -29,15 +41,18 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent" 
 	    android:layout_below="@+id/fulfillReqSpinner"
-	    android:paddingTop="30dp">
+	    android:paddingTop="30dp" />
 	
 	    <TextView
 	        android:id="@+id/viewRatingHeader"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_alignParentTop="true"
 	        android:layout_centerHorizontal="true"
-	        android:text="Ratings For [class]"
+	        android:layout_below="@+id/fulfillReqSpinner"
+	        android:paddingTop="20dp"
+	        android:text="Ratings For [class]:"
+	        android:textColor="@color/blue"
+	        android:textSize="30dp"
 	        android:textAppearance="?android:attr/textAppearanceLarge" />
 	    
 	    <ScrollView
@@ -47,6 +62,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_above="@+id/addButton"
+	        android:textSize="30dp"
 	        android:layout_below="@+id/progressBar1">
 	        
 	        <LinearLayout
@@ -60,14 +76,24 @@
 	
 	    <Button
 	        android:id="@+id/addButton"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
+	        android:layout_width="300dp"
+	        android:layout_height="100dp"
 	        android:layout_alignParentBottom="true"
 	        android:layout_alignParentLeft="true"
+	        android:layout_marginLeft="100dp"
+	        android:textSize="30dp"
+	        android:text="I want to take this class!" />
+	    
+	    <Button
+	        android:id="@+id/addButton"
+	        android:layout_width="300dp"
+	        android:layout_height="100dp"
+	        android:layout_marginRight="100dp"
+	        android:layout_alignParentBottom="true"
 	        android:layout_alignParentRight="true"
-	        android:text="Add Class" />
+	        android:textSize="30dp"
+	        android:text="I've already taken this class." />
 	
-	</RelativeLayout>
 	        
     </RelativeLayout>
 
