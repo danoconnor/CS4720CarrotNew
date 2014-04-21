@@ -9,18 +9,6 @@
         android:layout_height="match_parent" >
 
         <TextView
-            android:id="@+id/header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="15dp"
-            android:text="The following classes fill the ________ requirement. Choose one to see information about that class:"
-            android:textSize="30dp"
-            android:textAlignment="center"
-            android:gravity="center"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
             android:id="@+id/select"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -61,9 +49,9 @@
 	        android:id="@+id/viewRatingScrollView"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_above="@+id/addButton"
+	        android:layout_above="@+id/addTakenClassButton"
 	        android:textSize="30dp"
-	        android:layout_below="@+id/progressBar1">
+	        android:layout_below="@+id/viewRatingHeader">
 	        
 	        <LinearLayout
 	        android:id="@+id/viewRatingLinearLayout"
@@ -93,7 +81,28 @@
 	        android:layout_alignParentRight="true"
 	        android:textSize="30dp"
 	        android:text="I've already taken this class." />
-	
+
+	    <TextView
+	        android:id="@+id/header"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentTop="true"
+	        android:layout_centerHorizontal="true"
+	        android:layout_marginTop="18dp"
+	        android:gravity="center"
+	        android:text="Classes that fill the ________ requirement"
+	        android:textAlignment="center"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        android:textSize="40dp" />
+
+	    <TextView
+	        android:id="@+id/textView1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/header"
+	        android:layout_centerHorizontal="true"
+	        android:textSize="20dp"
+	        android:text="Choose one to see information about that class." />
 	        
     </RelativeLayout>
 
